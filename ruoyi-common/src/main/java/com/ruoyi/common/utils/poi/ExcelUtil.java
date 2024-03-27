@@ -370,6 +370,7 @@ public class ExcelUtil<T>
                 }
             }
             // 有数据时才处理 得到类的所有field.
+            // 有数据时才处理 得到类的所有field.
             List<Object[]> fields = this.getFields();
             Map<Integer, Object[]> fieldsMap = new HashMap<Integer, Object[]>();
             for (Object[] objects : fields)

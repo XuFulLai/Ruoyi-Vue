@@ -31,6 +31,7 @@
 <script>
 import ScrollPane from './ScrollPane'
 import path from 'path'
+import {mapState} from 'vuex'
 
 export default {
   components: { ScrollPane },
@@ -52,7 +53,10 @@ export default {
     },
     theme() {
       return this.$store.state.settings.theme;
-    }
+    },
+    ...mapState({
+      indexPage: state => state.permission.indexPage
+    })
   },
   watch: {
     $route() {
@@ -83,7 +87,11 @@ export default {
       };
     },
     isAffix(tag) {
-      return tag.meta && tag.meta.affix
+      if (tag.fullPath == this.indexPage) {
+        return true
+      } else {
+        return tag.meta && tag.meta.affix
+      }
     },
     isFirstView() {
       try {
@@ -206,7 +214,7 @@ export default {
           // to reload home page
           this.$router.replace({ path: '/redirect' + view.fullPath })
         } else {
-          this.$router.push('/')
+          this.$router.push(this.indexPage)
         }
       }
     },

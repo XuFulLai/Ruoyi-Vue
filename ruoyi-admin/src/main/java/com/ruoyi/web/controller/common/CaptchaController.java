@@ -38,9 +38,6 @@ public class CaptchaController {
     @Resource(name = "captchaProducer")
     private DefaultKaptcha captchaProducer;
 
-    @Resource(name = "captchaProducerMath")
-    private Producer captchaProducerMath;
-
     @Autowired
     private RedisCache redisCache;
 

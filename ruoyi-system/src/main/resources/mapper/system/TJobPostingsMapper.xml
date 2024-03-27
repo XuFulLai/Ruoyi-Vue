@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.TJobPostingsMapper">
+    
+    <resultMap type="TJobPostings" id="TJobPostingsResult">
+        <result property="id"    column="id"    />
+        <result property="year"    column="year"    />
+        <result property="employer"    column="employer"    />
+        <result property="postType"    column="post_type"    />
+        <result property="postName"    column="post_name"    />
+        <result property="jobDescription"    column="job_description"    />
+        <result property="recruitmentCount"    column="recruitment_count"    />
+        <result property="qualificationRatio"    column="qualification_ratio"    />
+        <result property="majorStudied"    column="major_studied"    />
+        <result property="examSubjects"    column="exam_subjects"    />
+        <result property="registeredResidence"    column="registered_residence"    />
+        <result property="workLocation"    column="work_location"    />
+        <result property="otherConditions"    column="other_conditions"    />
+    </resultMap>
+
+    <sql id="selectTJobPostingsVo">
+        select id, year, employer, post_type, post_name, job_description, recruitment_count, qualification_ratio, major_studied, exam_subjects, registered_residence, work_location, other_conditions from t_job_postings
+    </sql>
+
+    <select id="selectTJobPostingsList" parameterType="TJobPostings" resultMap="TJobPostingsResult">
+        <include refid="selectTJobPostingsVo"/>
+        <where>  
+            <if test="year != null "> and year = #{year}</if>
+            <if test="employer != null  and employer != ''"> and employer = #{employer}</if>
+            <if test="postType != null  and postType != ''"> and post_type = #{postType}</if>
+            <if test="postName != null  and postName != ''"> and post_name like concat('%', #{postName}, '%')</if>
+            <if test="jobDescription != null  and jobDescription != ''"> and job_description = #{jobDescription}</if>
+            <if test="recruitmentCount != null "> and recruitment_count = #{recruitmentCount}</if>
+            <if test="qualificationRatio != null "> and qualification_ratio = #{qualificationRatio}</if>
+            <if test="majorStudied != null  and majorStudied != ''"> and major_studied = #{majorStudied}</if>
+            <if test="examSubjects != null  and examSubjects != ''"> and exam_subjects = #{examSubjects}</if>
+            <if test="registeredResidence != null  and registeredResidence != ''"> and registered_residence = #{registeredResidence}</if>
+            <if test="workLocation != null  and workLocation != ''"> and work_location = #{workLocation}</if>
+            <if test="otherConditions != null  and otherConditions != ''"> and other_conditions = #{otherConditions}</if>
+        </where>
+    </select>
+    
+    <select id="selectTJobPostingsById" parameterType="Long" resultMap="TJobPostingsResult">
+        <include refid="selectTJobPostingsVo"/>
+        where id = #{id}
+    </select>
+        
+    <insert id="insertTJobPostings" parameterType="TJobPostings" useGeneratedKeys="true" keyProperty="id">
+        insert into t_job_postings
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="year != null">year,</if>
+            <if test="employer != null">employer,</if>
+            <if test="postType != null">post_type,</if>
+            <if test="postName != null">post_name,</if>
+            <if test="jobDescription != null">job_description,</if>
+            <if test="recruitmentCount != null">recruitment_count,</if>
+            <if test="qualificationRatio != null">qualification_ratio,</if>
+            <if test="majorStudied != null">major_studied,</if>
+            <if test="examSubjects != null">exam_subjects,</if>
+            <if test="registeredResidence != null">registered_residence,</if>
+            <if test="workLocation != null">work_location,</if>
+            <if test="otherConditions != null">other_conditions,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="year != null">#{year},</if>
+            <if test="employer != null">#{employer},</if>
+            <if test="postType != null">#{postType},</if>
+            <if test="postName != null">#{postName},</if>
+            <if test="jobDescription != null">#{jobDescription},</if>
+            <if test="recruitmentCount != null">#{recruitmentCount},</if>
+            <if test="qualificationRatio != null">#{qualificationRatio},</if>
+            <if test="majorStudied != null">#{majorStudied},</if>
+            <if test="examSubjects != null">#{examSubjects},</if>
+            <if test="registeredResidence != null">#{registeredResidence},</if>
+            <if test="workLocation != null">#{workLocation},</if>
+            <if test="otherConditions != null">#{otherConditions},</if>
+         </trim>
+    </insert>
+
+    <update id="updateTJobPostings" parameterType="TJobPostings">
+        update t_job_postings
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="year != null">year = #{year},</if>
+            <if test="employer != null">employer = #{employer},</if>
+            <if test="postType != null">post_type = #{postType},</if>
+            <if test="postName != null">post_name = #{postName},</if>
+            <if test="jobDescription != null">job_description = #{jobDescription},</if>
+            <if test="recruitmentCount != null">recruitment_count = #{recruitmentCount},</if>
+            <if test="qualificationRatio != null">qualification_ratio = #{qualificationRatio},</if>
+            <if test="majorStudied != null">major_studied = #{majorStudied},</if>
+            <if test="examSubjects != null">exam_subjects = #{examSubjects},</if>
+            <if test="registeredResidence != null">registered_residence = #{registeredResidence},</if>
+            <if test="workLocation != null">work_location = #{workLocation},</if>
+            <if test="otherConditions != null">other_conditions = #{otherConditions},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteTJobPostingsById" parameterType="Long">
+        delete from t_job_postings where id = #{id}
+    </delete>
+
+    <delete id="deleteTJobPostingsByIds" parameterType="String">
+        delete from t_job_postings where id in 
+        <foreach item="id" collection="array" open="(" separator="," close=")">
+            #{id}
+        </foreach>
+    </delete>
+</mapper>

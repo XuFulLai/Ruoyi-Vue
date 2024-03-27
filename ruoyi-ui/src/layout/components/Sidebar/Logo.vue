@@ -16,6 +16,7 @@
 <script>
 import logoImg from '@/assets/logo/logo.png'
 import variables from '@/assets/styles/variables.scss'
+import {mapState} from 'vuex'
 
 export default {
   name: 'SidebarLogo',

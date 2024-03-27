@@ -82,7 +82,7 @@ function mixinMethod(type) {
         submitForm: `submitForm() {
         this.$refs['${confGlobal.formRef}'].validate(valid => {
           if(!valid) return
-          // TODO 提交表单
+           提交表单
         })
       },`,
         resetForm: `resetForm() {
@@ -199,7 +199,7 @@ function buildSubmitUpload(conf) {
 
 function buildOptionMethod(methodName, model, methodList) {
   const str = `${methodName}() {
-    // TODO 发起请求获取数据
+     发起请求获取数据
     this.${model}
   },`
   methodList.push(str)
