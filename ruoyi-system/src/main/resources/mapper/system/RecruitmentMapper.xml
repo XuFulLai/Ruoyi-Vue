@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.RecruitmentMapper">
+    
+    <resultMap type="Recruitment" id="RecruitmentResult">
+        <result property="id"    column="id"    />
+        <result property="unitName"    column="unit_name"    />
+        <result property="jobTitle"    column="job_title"    />
+        <result property="jobCode"    column="job_code"    />
+        <result property="vacancies"    column="vacancies"    />
+        <result property="interviewRatio"    column="interview_ratio"    />
+        <result property="jobCategory"    column="job_category"    />
+        <result property="jobLevel"    column="job_level"    />
+        <result property="jobDescription"    column="job_description"    />
+        <result property="minEducation"    column="min_education"    />
+        <result property="major"    column="major"    />
+        <result property="vocationalSkillQualification"    column="vocational_skill_qualification"    />
+        <result property="householdRegistrationLocation"    column="household_registration_location"    />
+        <result property="gender"    column="gender"    />
+        <result property="otherRequirements"    column="other_requirements"    />
+        <result property="workLocation"    column="work_location"    />
+        <result property="importantNotes"    column="important_notes"    />
+        <result property="maritalStatus"    column="marital_status"    />
+        <result property="examSubjects"    column="exam_subjects"    />
+        <result property="recruitmentSource"    column="recruitment_source"    />
+    </resultMap>
+
+    <sql id="selectRecruitmentVo">
+        select id, unit_name, job_title, job_code, vacancies, interview_ratio, job_category, job_level, job_description, min_education, major, vocational_skill_qualification, household_registration_location, gender, other_requirements, work_location, important_notes, marital_status, exam_subjects, recruitment_source from recruitment
+    </sql>
+
+    <select id="selectRecruitmentList" parameterType="Recruitment" resultMap="RecruitmentResult">
+        <include refid="selectRecruitmentVo"/>
+        <where>
+            <if test="unitName != null  and unitName != ''"> and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="jobTitle != null  and jobTitle != ''"> and job_title like concat('%', #{jobTitle}, '%')</if>
+            <if test="jobCode != null "> and job_code = #{jobCode}</if>
+            <if test="vacancies != null "> and vacancies = #{vacancies}</if>
+            <if test="interviewRatio != null "> and interview_ratio = #{interviewRatio}</if>
+            <if test="jobCategory != null  and jobCategory != ''"> and job_category = #{jobCategory}</if>
+            <if test="jobLevel != null  and jobLevel != ''"> and job_level = #{jobLevel}</if>
+            <if test="jobDescription != null  and jobDescription != ''"> and job_description like concat('%', #{jobDescription}, '%')</if>
+            <if test="minEducation != null  and minEducation != ''"> and min_education LIKE CONCAT('%', #{minEducation}, '%')</if>
+            <if test="major != null  and major != ''"> and major like concat('%', #{major}, '%')</if>
+            <if test="vocationalSkillQualification != null  and vocationalSkillQualification != ''"> and vocational_skill_qualification like concat('%', #{vocationalSkillQualification}, '%')</if>
+            <if test="householdRegistrationLocation != null  and householdRegistrationLocation != ''"> and household_registration_location like concat('%', #{householdRegistrationLocation}, '%')</if>
+            <if test="gender != null  and gender != ''"> and gender = #{gender}</if>
+            <if test="otherRequirements != null  and otherRequirements != ''"> and other_requirements like concat('%', #{otherRequirements}, '%')</if>
+            <if test="workLocation != null  and workLocation != ''"> and work_location like concat('%', #{workLocation}, '%')</if>
+            <if test="importantNotes != null  and importantNotes != ''"> and important_notes like concat('%', #{importantNotes}, '%')</if>
+            <if test="maritalStatus != null  and maritalStatus != ''"> and marital_status = #{maritalStatus}</if>
+            <if test="examSubjects != null  and examSubjects != ''"> and exam_subjects like concat('%', #{examSubjects}, '%')</if>
+            <if test="recruitmentSource != null  and recruitmentSource != ''"> and recruitment_source like concat('%', #{recruitmentSource}, '%')</if>
+        </where>
+    </select>
+    
+    <select id="selectRecruitmentByUnitName" parameterType="String" resultMap="RecruitmentResult">
+        <include refid="selectRecruitmentVo"/>
+        where unit_name = #{unitName}
+    </select>
+    <select id="selectRecruitmentByJobCode" resultType="com.ruoyi.system.domain.Recruitment">
+        <include refid="selectRecruitmentVo"/>
+        where job_code = #{jobCode}
+    </select>
+
+    <select id="selectRecruitmentById" resultType="com.ruoyi.system.domain.Recruitment">
+        <include refid="selectRecruitmentVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertRecruitment" parameterType="Recruitment">
+        insert into recruitment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="unitName != null and unitName != ''">unit_name,</if>
+            <if test="jobTitle != null and jobTitle != ''">job_title,</if>
+            <if test="jobCode != null">job_code,</if>
+            <if test="vacancies != null">vacancies,</if>
+            <if test="interviewRatio != null">interview_ratio,</if>
+            <if test="jobCategory != null">job_category,</if>
+            <if test="jobLevel != null">job_level,</if>
+            <if test="jobDescription != null">job_description,</if>
+            <if test="minEducation != null">min_education,</if>
+            <if test="major != null">major,</if>
+            <if test="vocationalSkillQualification != null">vocational_skill_qualification,</if>
+            <if test="householdRegistrationLocation != null">household_registration_location,</if>
+            <if test="gender != null">gender,</if>
+            <if test="otherRequirements != null">other_requirements,</if>
+            <if test="workLocation != null">work_location,</if>
+            <if test="importantNotes != null">important_notes,</if>
+            <if test="maritalStatus != null">marital_status,</if>
+            <if test="examSubjects != null">exam_subjects,</if>
+            <if test="recruitmentSource != null">recruitment_source,</if>
+         </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="unitName != null and unitName != ''">#{unitName},</if>
+            <if test="jobTitle != null and jobTitle != ''">#{jobTitle},</if>
+            <if test="jobCode != null">#{jobCode},</if>
+            <if test="vacancies != null">#{vacancies},</if>
+            <if test="interviewRatio != null">#{interviewRatio},</if>
+            <if test="jobCategory != null">#{jobCategory},</if>
+            <if test="jobLevel != null">#{jobLevel},</if>
+            <if test="jobDescription != null">#{jobDescription},</if>
+            <if test="minEducation != null">#{minEducation},</if>
+            <if test="major != null">#{major},</if>
+            <if test="vocationalSkillQualification != null">#{vocationalSkillQualification},</if>
+            <if test="householdRegistrationLocation != null">#{householdRegistrationLocation},</if>
+            <if test="gender != null">#{gender},</if>
+            <if test="otherRequirements != null">#{otherRequirements},</if>
+            <if test="workLocation != null">#{workLocation},</if>
+            <if test="importantNotes != null">#{importantNotes},</if>
+            <if test="maritalStatus != null">#{maritalStatus},</if>
+            <if test="examSubjects != null">#{examSubjects},</if>
+            <if test="recruitmentSource != null">#{recruitmentSource},</if>
+         </trim>
+    </insert>
+
+    <update id="updateRecruitment" parameterType="Recruitment">
+        update recruitment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="jobTitle != null and jobTitle != ''">job_title = #{jobTitle},</if>
+            <if test="jobCode != null">job_code = #{jobCode},</if>
+            <if test="vacancies != null">vacancies = #{vacancies},</if>
+            <if test="interviewRatio != null">interview_ratio = #{interviewRatio},</if>
+            <if test="jobCategory != null">job_category = #{jobCategory},</if>
+            <if test="jobLevel != null">job_level = #{jobLevel},</if>
+            <if test="jobDescription != null">job_description = #{jobDescription},</if>
+            <if test="minEducation != null">min_education = #{minEducation},</if>
+            <if test="major != null">major = #{major},</if>
+            <if test="vocationalSkillQualification != null">vocational_skill_qualification = #{vocationalSkillQualification},</if>
+            <if test="householdRegistrationLocation != null">household_registration_location = #{householdRegistrationLocation},</if>
+            <if test="gender != null">gender = #{gender},</if>
+            <if test="otherRequirements != null">other_requirements = #{otherRequirements},</if>
+            <if test="workLocation != null">work_location = #{workLocation},</if>
+            <if test="importantNotes != null">important_notes = #{importantNotes},</if>
+            <if test="maritalStatus != null">marital_status = #{maritalStatus},</if>
+            <if test="examSubjects != null">exam_subjects = #{examSubjects},</if>
+            <if test="recruitmentSource != null">recruitment_source = #{recruitmentSource},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteRecruitmentByUnitName" parameterType="String">
+        delete from recruitment where unit_name = #{unitName}
+    </delete>
+
+    <delete id="deleteRecruitmentByUnitNames" parameterType="String">
+        delete from recruitment where unit_name in 
+        <foreach item="unitName" collection="array" open="(" separator="," close=")">
+            #{unitName}
+        </foreach>
+    </delete>
+</mapper>

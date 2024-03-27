@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ruoyi.system.mapper.HistoryRecruitmentMapper">
+
+    <resultMap type="HistoryRecruitment" id="HistoryRecruitmentResult">
+        <result property="jobCode" column="job_code"/>
+        <result property="year" column="year"/>
+        <result property="unitSerialNumber" column="unit_serial_number"/>
+        <result property="unitName" column="unit_name"/>
+        <result property="jobCategory" column="job_category"/>
+        <result property="jobTitle" column="job_title"/>
+        <result property="jobDescription" column="job_description"/>
+        <result property="vacancies" column="vacancies"/>
+        <result property="qualifyingRatio" column="qualifying_ratio"/>
+        <result property="sourceCategory" column="source_category"/>
+        <result property="educationLevel" column="education_level"/>
+        <result property="degree" column="degree"/>
+        <result property="major" column="major"/>
+        <result property="examSubjects" column="exam_subjects"/>
+        <result property="academicTitleGraduate" column="academic_title_graduate"/>
+        <result property="academicTitleProfessional" column="academic_title_professional"/>
+        <result property="vocationalQualificationGraduate" column="vocational_qualification_graduate"/>
+        <result property="vocationalQualificationProfessional" column="vocational_qualification_professional"/>
+        <result property="otherRequirements" column="other_requirements"/>
+        <result property="workLocation" column="work_location"/>
+        <result property="contactNumber" column="contact_number"/>
+        <result property="interviewSupplement" column="interview_supplement"/>
+    </resultMap>
+
+    <sql id="selectHistoryRecruitmentVo">
+        select id,
+               job_code,
+               year,
+               unit_serial_number,
+               unit_name,
+               job_category,
+               job_title,
+               job_description,
+               vacancies,
+               qualifying_ratio,
+               source_category,
+               education_level,
+               degree,
+               major,
+               exam_subjects,
+               academic_title_graduate,
+               academic_title_professional,
+               vocational_qualification_graduate,
+               vocational_qualification_professional,
+               other_requirements,
+               work_location,
+               contact_number,
+               interview_supplement
+        from history_recruitment
+    </sql>
+
+    <select id="selectHistoryRecruitmentList" parameterType="HistoryRecruitment" resultMap="HistoryRecruitmentResult">
+        <include refid="selectHistoryRecruitmentVo"/>
+        <where>
+            <if test="jobCode != null  and jobCode != ''">and job_code = #{jobCode}</if>
+            <if test="year != null  and year != ''">and year = #{year}</if>
+            <if test="unitSerialNumber != null  and unitSerialNumber != ''">and unit_serial_number =
+                #{unitSerialNumber}
+            </if>
+            <if test="jobCategory != null  and jobCategory != ''">and job_category = #{jobCategory}</if>
+            <if test="unitName != null  and unitName != ''">and unit_name like concat('%', #{unitName}, '%')</if>
+            <if test="jobTitle != null  and jobTitle != ''">and job_title like concat('%', #{jobTitle}, '%')</if>
+            <if test="jobDescription != null  and jobDescription != ''">and job_description like concat('%',
+                #{jobDescription}, '%')
+            </if>
+            <if test="vacancies != null ">and vacancies = #{vacancies}</if>
+            <if test="qualifyingRatio != null  and qualifyingRatio != ''">and qualifying_ratio = #{qualifyingRatio}</if>
+            <if test="sourceCategory != null  and sourceCategory != ''">and source_category = #{sourceCategory}</if>
+            <if test="educationLevel != null  and educationLevel != ''">and education_level LIKE CONCAT('%',
+                #{educationLevel}, '%')
+            </if>
+            <if test="degree != null  and degree != ''">and degree = #{degree}</if>
+            <if test="major != null  and major != ''">and major like concat('%', #{major}, '%')</if>
+            <if test="examSubjects != null  and examSubjects != ''">and exam_subjects like concat('%', #{examSubjects},
+                '%')
+            </if>
+            <if test="academicTitleGraduate != null  and academicTitleGraduate != ''">and academic_title_graduate =
+                #{academicTitleGraduate}
+            </if>
+            <if test="academicTitleProfessional != null  and academicTitleProfessional != ''">and
+                academic_title_professional = #{academicTitleProfessional}
+            </if>
+            <if test="vocationalQualificationGraduate != null  and vocationalQualificationGraduate != ''">and
+                vocational_qualification_graduate = #{vocationalQualificationGraduate}
+            </if>
+            <if test="vocationalQualificationProfessional != null  and vocationalQualificationProfessional != ''">and
+                vocational_qualification_professional = #{vocationalQualificationProfessional}
+            </if>
+            <if test="otherRequirements != null  and otherRequirements != ''">and other_requirements like concat('%',
+                #{otherRequirements}, '%')
+            </if>
+            <if test="workLocation != null  and workLocation != ''">and work_location like concat('%', #{workLocation},
+                '%')
+            </if>
+            <if test="contactNumber != null  and contactNumber != ''">and contact_number like concat('%',
+                #{contactNumber}, '%')
+            </if>
+            <if test="interviewSupplement != null  and interviewSupplement != ''">and interview_supplement like
+                concat('%', #{interviewSupplement}, '%')
+            </if>
+        </where>
+    </select>
+
+    <select id="selectHistoryRecruitmentByJobCode" parameterType="String" resultMap="HistoryRecruitmentResult">
+        <include refid="selectHistoryRecruitmentVo"/>
+        where job_code = #{jobCode}
+    </select>
+    <select id="selectHistoryRecruitmentById" resultType="com.ruoyi.system.domain.HistoryRecruitment">
+        <include refid="selectHistoryRecruitmentVo"/>
+        where id = #{id}
+    </select>
+
+    <insert id="insertHistoryRecruitment" parameterType="HistoryRecruitment">
+        insert into history_recruitment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="jobCode != null and jobCode != ''">job_code,</if>
+            <if test="year != null">year,</if>
+            <if test="unitSerialNumber != null and unitSerialNumber != ''">unit_serial_number,</if>
+            <if test="unitName != null and unitName != ''">unit_name,</if>
+            <if test="jobCategory != null">job_category,</if>
+            <if test="jobTitle != null">job_title,</if>
+            <if test="jobDescription != null">job_description,</if>
+            <if test="vacancies != null">vacancies,</if>
+            <if test="qualifyingRatio != null">qualifying_ratio,</if>
+            <if test="sourceCategory != null">source_category,</if>
+            <if test="educationLevel != null">education_level,</if>
+            <if test="degree != null">degree,</if>
+            <if test="major != null">major,</if>
+            <if test="examSubjects != null">exam_subjects,</if>
+            <if test="academicTitleGraduate != null">academic_title_graduate,</if>
+            <if test="academicTitleProfessional != null">academic_title_professional,</if>
+            <if test="vocationalQualificationGraduate != null">vocational_qualification_graduate,</if>
+            <if test="vocationalQualificationProfessional != null">vocational_qualification_professional,</if>
+            <if test="otherRequirements != null">other_requirements,</if>
+            <if test="workLocation != null">work_location,</if>
+            <if test="contactNumber != null">contact_number,</if>
+            <if test="interviewSupplement != null">interview_supplement,</if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="jobCode != null and jobCode != ''">#{jobCode},</if>
+            <if test="year != null">#{year},</if>
+            <if test="unitSerialNumber != null and unitSerialNumber != ''">#{unitSerialNumber},</if>
+            <if test="unitName != null and unitName != ''">unit_name,</if>
+            <if test="jobCategory != null">#{jobCategory},</if>
+            <if test="jobTitle != null">#{jobTitle},</if>
+            <if test="jobDescription != null">#{jobDescription},</if>
+            <if test="vacancies != null">#{vacancies},</if>
+            <if test="qualifyingRatio != null">#{qualifyingRatio},</if>
+            <if test="sourceCategory != null">#{sourceCategory},</if>
+            <if test="educationLevel != null">#{educationLevel},</if>
+            <if test="degree != null">#{degree},</if>
+            <if test="major != null">#{major},</if>
+            <if test="examSubjects != null">#{examSubjects},</if>
+            <if test="academicTitleGraduate != null">#{academicTitleGraduate},</if>
+            <if test="academicTitleProfessional != null">#{academicTitleProfessional},</if>
+            <if test="vocationalQualificationGraduate != null">#{vocationalQualificationGraduate},</if>
+            <if test="vocationalQualificationProfessional != null">#{vocationalQualificationProfessional},</if>
+            <if test="otherRequirements != null">#{otherRequirements},</if>
+            <if test="workLocation != null">#{workLocation},</if>
+            <if test="contactNumber != null">#{contactNumber},</if>
+            <if test="interviewSupplement != null">#{interviewSupplement},</if>
+        </trim>
+    </insert>
+
+    <update id="updateHistoryRecruitment" parameterType="HistoryRecruitment">
+        update history_recruitment
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="year != null">year = #{year},</if>
+            <if test="unitSerialNumber != null and unitSerialNumber != ''">unit_serial_number = #{unitSerialNumber},
+            </if>
+            <if test="unitName != null">unit_name = #{unitName},</if>
+            <if test="jobCategory != null">job_category = #{jobCategory},</if>
+            <if test="jobTitle != null">job_title = #{jobTitle},</if>
+            <if test="jobDescription != null">job_description = #{jobDescription},</if>
+            <if test="vacancies != null">vacancies = #{vacancies},</if>
+            <if test="qualifyingRatio != null">qualifying_ratio = #{qualifyingRatio},</if>
+            <if test="sourceCategory != null">source_category = #{sourceCategory},</if>
+            <if test="educationLevel != null">education_level = #{educationLevel},</if>
+            <if test="degree != null">degree = #{degree},</if>
+            <if test="major != null">major = #{major},</if>
+            <if test="examSubjects != null">exam_subjects = #{examSubjects},</if>
+            <if test="academicTitleGraduate != null">academic_title_graduate = #{academicTitleGraduate},</if>
+            <if test="academicTitleProfessional != null">academic_title_professional = #{academicTitleProfessional},
+            </if>
+            <if test="vocationalQualificationGraduate != null">vocational_qualification_graduate =
+                #{vocationalQualificationGraduate},
+            </if>
+            <if test="vocationalQualificationProfessional != null">vocational_qualification_professional =
+                #{vocationalQualificationProfessional},
+            </if>
+            <if test="otherRequirements != null">other_requirements = #{otherRequirements},</if>
+            <if test="workLocation != null">work_location = #{workLocation},</if>
+            <if test="contactNumber != null">contact_number = #{contactNumber},</if>
+            <if test="interviewSupplement != null">interview_supplement = #{interviewSupplement},</if>
+        </trim>
+        where id = #{id}
+    </update>
+
+    <delete id="deleteHistoryRecruitmentByJobCode" parameterType="String">
+        delete
+        from history_recruitment
+        where job_code = #{jobCode}
+    </delete>
+
+    <delete id="deleteHistoryRecruitmentByJobCodes" parameterType="String">
+        delete from history_recruitment where job_code in
+        <foreach item="jobCode" collection="array" open="(" separator="," close=")">
+            #{jobCode}
+        </foreach>
+    </delete>
+</mapper>
